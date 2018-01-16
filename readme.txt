@@ -1,3 +1,14 @@
+README
+================================================================================================
+Version 1.0, 16-Jan-2018
+
+The code has been tested with MATLAB 2017a/b on a PC with 64-bit windows 7/10.
+
+================================================================================================
+
+Use of this code is free for research purposes only.
+
+================================================================================================
 IDT: Inverse Distance Transform, IDT is used to match edges of LiDAR and image[1].
 For specific technique details, please read paper[2].  
 
