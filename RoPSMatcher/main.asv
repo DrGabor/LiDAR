@@ -1,0 +1,14 @@
+clc; close all; clear all; 
+addpath('C:\Program Files\MATLAB\R2017a\bin\RoPSMatcher\RoPS Toolbox2\');
+DataDir = 'D:\Data\Star Farmming\Record-2017-05-11-16-10-36(L)\BinaryData\Binary0.txt'; 
+GapThr = [0.2 inf]; 
+pcData = HDLAnalyserNew(DataDir);
+[EffIdx, NffIdx, UnkownIdx, GrdPts] = GroundSegmentationFunWithFixedHyp(pcData, GapThr, 0); 
+data0 = pcData(1:3, NffIdx); 
+ResArray = [0.5 1.0]; 
+rops0 = CalRoPSFun(data0, ResArray);
+DataDir = 'D:\Data\Star Farmming\Record-2017-05-11-16-10-36(L)\BinaryData\Binary100.txt';
+pcData = HDLAnalyserNew(DataDir); 
+data1 = pcData(1:3, :); 
+rops1 = CalRoPSFun(data1, ResArray);
+[R0, T0, MaxEvalNum, RefSize] = RoPSMatchFun( rops0, rops1, 1 );
