@@ -21,10 +21,7 @@ p2pICP() point to point Iterative Closest Point(ICP)
 p2plICP() point to plane ICP
 TrimmedICP() Trimmed ICP
 Velodyne 64E-S3 Related
-HDLAnalyserNew(DataDir) convert binary data(contained in BinaryData Folder) to xyz format; HDLS3Calib.txt is calibration file, 
-and it should be placed in proper directory. 
+HDLAnalyserNew(DataDir) converts binary data(contained in BinaryData Folder) to xyz format; HDLS3Calib.txt is calibration file, and it should be placed in proper directory. 
 PolarGridMap()   partition point cloud as polar coordinate.
 LatticeGridMap()  partition point cloud as grid coordinate.
 CalNormalsFun() calculate normals for 3D point cloud. 
-
-If you have any problems, please contact me: de2wang@stu.xjtu.edu.cn or 280868861@qq.com
