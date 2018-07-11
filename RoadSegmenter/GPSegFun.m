@@ -11,7 +11,7 @@ if nargin == 0
     GapThr = [0.10 Inf];
     IS_SHOW = 1;
 end
-RadRes = 1.0; 1.0;
+RadRes = 2.0; 1.0;
 RadArray = 0.0 : RadRes : 80.0;
 AngRes = deg2rad(5.0);
 [SegID, BinID, EffIdx] = CvtPtsToPolar(pcData, RadArray, AngRes);
@@ -108,7 +108,7 @@ for AngID = 1 : 1 : maxAngLen
     Hyp.cov = log([6.0 sqrt(1.3298)]);
     Hyp.mean = [0 0];
     Hyp.lik = log(0.1);
-    out = GPRGrdSegFun_WithFixedHyp(Pts, idx, tData, tDist, Hyp);
+    out = GPR_SelectFun(Pts, idx, tData, tDist, Hyp);
     VIdx = out.ValidIdx;
     xs = Pts(1, :);
     ys = Pts(2, :);
@@ -268,4 +268,3 @@ if IS_SHOW
     title('Road Model'); 
 end
 end
-
