@@ -1,4 +1,4 @@
-function [GrdIdx, ObsIdx, UnkownIdx, GrdPts] = GroundSegmentationFunWithFixedHyp(pcData, GapThr, IS_SHOW)
+function [GrdIdx, ObsIdx, UnkownIdx, GrdPts] = GPSegFun(pcData, params)
 if nargin == 0
     clc; close all;
     DataFolder = 'D:\Data\Sudoku\Record-2017-10-26-09-03-48(Match2016)\BinaryData';
@@ -6,15 +6,22 @@ if nargin == 0
     DataDir = fullfile(DataFolder, sprintf('Binary%d.txt', nFrm));
     pcData = HDLAnalyserNew(DataDir);
     pcData = pcData(1:3, :);
-    %     idx = find(pcData(1, :) >= 0);
-    %     pcData = pcData(:, idx);
-    GapThr = [0.10 Inf];
-    IS_SHOW = 1;
+    params = []; 
+    params.GapThr = [0.10 1.0]; 
+    params.RadArray = 0.0 : 2.0 : 80.0; 
+    params.AngRes   = deg2rad(5.0); 
+    params.GroundH  = -1.8; 
+    params.IS_SHOW = 0; 
 end
-RadRes = 2.0; 1.0;
-RadArray = 0.0 : RadRes : 80.0;
-AngRes = deg2rad(5.0);
-[SegID, BinID, EffIdx] = CvtPtsToPolar(pcData, RadArray, AngRes);
+if nargin == 1
+    params = []; 
+    params.GapThr = [0.10 1.0]; 
+    params.RadArray = 0.0 : 2.0 : 80.0; 
+    params.AngRes   = deg2rad(5.0); 
+    params.GroundH  = -1.8; 
+    params.IS_SHOW = 0; 
+end
+[SegID, BinID, EffIdx] = CvtPtsToPolar(pcData, params.RadArray, params.AngRes);
 SegID = SegID(EffIdx);
 BinID = BinID(EffIdx);
 data = pcData(:, EffIdx);
@@ -85,7 +92,7 @@ for AngID = 1 : 1 : maxAngLen
     testRad = 5.0;
     H0 = k*testRad + b;
     idx = find(abs(Dist) <= DistThr);
-    if length(idx) < 10 | ( H0 > -1.5 | H0 < -2.1)  % the orignal ground height is -1.8m.
+    if length(idx) < 10 | ( H0 > (params.GroundH + 0.3) | H0 < (params.GroundH - 0.3) )  % the orignal ground height is -1.8m.
         UnkownSeg0 = [UnkownSeg0 AngID];
         if length(idx) < 10
             str = sprintf('AngID = %03d/%03d, too few initial points, continue!', AngID, maxAngLen);
@@ -236,7 +243,7 @@ for i = 1 : 1 : size(RMInfo, 1)
     end
 end
 GrdPts = [GrdPts GrdAddPts];
-if IS_SHOW
+if params.IS_SHOW
     figure;
     hold on;
     grid on;
