@@ -10,10 +10,14 @@ cloud = pcdownsample(pointCloud(data'), 'gridAverage', 0.1);
 data = cloud.Location';
 Dist = sqrt(sum(data(1:2, :).^2));
 data = data(:, Dist >= 3.0 & Dist <= 60.0);
-GapThr = [0.2 inf];
-IS_SHOW = 1;
+params = []; 
+params.GapThr = [0.10 1.0]; 
+params.RadArray = 0.0 : 2.0 : 80.0; 
+params.AngRes   = deg2rad(5.0); 
+params.GroundH  = -1.8; 
+params.IS_SHOW = 1; 
 tic
-[GrdIdx, ObsIdx, UnkownIdx, GrdPts] = GPSegFun(data, GapThr, IS_SHOW);
+[GrdIdx, ObsIdx, UnkownIdx, GrdPts] = GPSegFun(data, params);
 toc
 %% Run DBSCAN Clustering Algorithm
 obsData = data(:, ObsIdx); 
