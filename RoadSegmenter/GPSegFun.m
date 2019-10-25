@@ -11,7 +11,7 @@ if nargin == 0
     params.RadArray = 0.0 : 2.0 : 80.0; 
     params.AngRes   = deg2rad(5.0); 
     params.GroundH  = -1.8; 
-    params.IS_SHOW = 0; 
+    params.IS_SHOW = 1; 
 end
 if nargin == 1
     params = []; 
