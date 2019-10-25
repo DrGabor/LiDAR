@@ -7,9 +7,15 @@ if nargin == 0
     pcData = HDLAnalyserNew(DataDir);
     pcData = pcData(1:3, :);
     params = []; 
+    %%%%% After extracting the road model, the points' heights below GapThr(1) are labelled as road/ground, 
+    %%%%% and the points' height between GapThr(1) and GapThr(2) are labelled as obstacle, and the other points
+    %%%%% are labelled as unknown points. 
     params.GapThr = [0.10 1.0]; 
+    %%%%% RadArray and AngRes are used for polar-grid-based spacial partition. 
     params.RadArray = 0.0 : 2.0 : 80.0; 
     params.AngRes   = deg2rad(5.0); 
+    %%%%%% GroundH is the proximal road height. 
+    %%%%%% Notice that this algorithm assumes the LiDAR is installed parallell to real road surface.  
     params.GroundH  = -1.8; 
     params.IS_SHOW = 1; 
 end
